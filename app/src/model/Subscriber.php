@@ -4,6 +4,7 @@ namespace Model;
 
 /**
  * Class Subscriber create object Subscriber
+ * @deprecated 
  */
 class Subscriber {
 
@@ -126,7 +127,6 @@ class Subscriber {
     public function setState( string $state ) {
         $this->_state = $state;
     }
-
 }
 
 ?>

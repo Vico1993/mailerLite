@@ -30,12 +30,19 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 
-$app->get('/', function (Request $request, Response $response, array $args) {
-    $subscriberMapper = new Model\SubscriberMapper($this->db); 
+/**
+ * Adding Routes to our application
+ */
+require __DIR__ . '/routes/SubscriberRoutes.php';
 
-    echo "<pre>";
-    var_dump($subscriberMapper->getSubscriberById(1));
-    echo "</pre>";
+$app->get('/', function (Request $request, Response $response, array $args) {
+    echo "Racine début";
+    
+    // $subscriberMapper = new Model\SubscriberMapper($this->db); 
+
+    // echo "<pre>";
+    // var_dump($subscriberMapper->getSubscriberById(1));
+    // echo "</pre>";
 });
 
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {

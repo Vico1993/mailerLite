@@ -64,12 +64,18 @@ class SubscriberMapper {
     function getAllSubscribers() {
         $subscribers = [];
         
-        $query = $this->_pdo->prepare( 'SELECT * FROM subs ORDER BY subs.state' );
+        $query = $this->_pdo->prepare( 'SELECT * FROM subs ORDER BY subs.state_value' );
 		$query->execute();
 
 		while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {
-            $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
-            
+            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
+            $subscriber = [
+                'id'        => $res->id, 
+                'name'      => $res->name, 
+                'email'     => $res->email, 
+                'state'     => $res->state_value,
+            ];
+
 			$subscribers[] = $subscriber;
 		}
 
@@ -89,8 +95,14 @@ class SubscriberMapper {
 		$res = $query->fetch( PDO::FETCH_OBJ );
 
 		if( !empty( $res ) ) {
-            $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
-            
+            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
+            $subscriber = [
+                'id'        => $res->id, 
+                'name'      => $res->name, 
+                'email'     => $res->email, 
+                'state'     => $res->state_value,
+            ];
+
 			return $subscriber;
 		}
 
@@ -112,8 +124,14 @@ class SubscriberMapper {
 		$query->execute();
 
 		while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {
-            $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
-            
+            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
+            $subscriber = [
+                'id'        => $res->id, 
+                'name'      => $res->name, 
+                'email'     => $res->email, 
+                'state'     => $res->state_value,
+            ];
+
 			$subscribers[] = $subscriber;
 		}
 
