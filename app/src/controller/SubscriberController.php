@@ -8,13 +8,31 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Model\SubscriberMapper as SubscriberMapper;
 
 class SubscriberController {
+
+    /**
+     * Container who will get all data from our Slim App ( example the bdd )
+     *
+     * @var [type]
+     */
     protected $container;
 
-    // constructor receives container instance
+    /**
+     * Controller who will responds to a specifc routes
+     *
+     * @param \Slim\Container $container
+     */
     public function __construct( \Slim\Container $container ) {
         $this->container = $container;
     }
 
+    /**
+     * Methode who will return a specific subscriber if id given or all subscribers
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return void
+     */
     public function get(Request $request, Response $response, array $args) {
         // Data to return 
         $data = array();
