@@ -10,7 +10,8 @@ web:
     - db
 
 php:
-  image: php:7-fpm
+  build: "./docker/php"
+  dockerfile: "Dockerfile"
   volumes:
     - ./app:/var/www/app
 
