@@ -20,6 +20,10 @@ class ComposerStaticInit3fa28e7897685a9a53186181b8548745
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
         ),
+        'M' => 
+        array (
+            'Model\\' => 6,
+        ),
         'I' => 
         array (
             'Interop\\Container\\' => 18,
@@ -27,6 +31,10 @@ class ComposerStaticInit3fa28e7897685a9a53186181b8548745
         'F' => 
         array (
             'FastRoute\\' => 10,
+        ),
+        'C' => 
+        array (
+            'Controller\\' => 11,
         ),
     );
 
@@ -43,6 +51,10 @@ class ComposerStaticInit3fa28e7897685a9a53186181b8548745
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
+        'Model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/model',
+        ),
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
@@ -51,10 +63,10 @@ class ComposerStaticInit3fa28e7897685a9a53186181b8548745
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/../..' . '/src',
+        'Controller\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/controller',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -72,7 +84,6 @@ class ComposerStaticInit3fa28e7897685a9a53186181b8548745
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3fa28e7897685a9a53186181b8548745::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3fa28e7897685a9a53186181b8548745::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit3fa28e7897685a9a53186181b8548745::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit3fa28e7897685a9a53186181b8548745::$prefixesPsr0;
 
         }, null, ClassLoader::class);

@@ -1,5 +1,7 @@
 <?php 
 
+namespace Model;
+
 /**
  * Class Subscriber create object Subscriber
  */

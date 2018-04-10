@@ -31,7 +31,7 @@ $container['db'] = function ($c) {
 };
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    $subscriberMapper = new SubscriberMapper($this->db); 
+    $subscriberMapper = new Model\SubscriberMapper($this->db); 
 
     echo "<pre>";
     var_dump($subscriberMapper->getSubscriberById(1));

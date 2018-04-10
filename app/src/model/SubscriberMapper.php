@@ -1,5 +1,9 @@
 <?php
 
+namespace Model;
+
+use \PDO;
+
 /**
  * Class SubscriberMapper interact with the BDD to return Subscriber
  */
