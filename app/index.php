@@ -34,7 +34,7 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     $subscriberMapper = new SubscriberMapper($this->db); 
 
     echo "<pre>";
-    var_dump($subscriberMapper->getAllSubscribers());
+    var_dump($subscriberMapper->getSubscriberById(1));
     echo "</pre>";
 });
 
