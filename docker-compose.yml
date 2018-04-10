@@ -7,14 +7,14 @@ web:
     - ./default.conf:/etc/nginx/conf.d/default.conf
   links:
     - php
-    - mysqldb
+    - db
 
 php:
   image: php:7-fpm
   volumes:
     - ./app:/var/www/app
 
-mysqldb:
+db:
   image: mysql:latest
   env_file:
     - ".env"
