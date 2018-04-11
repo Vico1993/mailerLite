@@ -39,7 +39,7 @@ class SubscriberController {
      * @param Request $request
      * @param Response $response
      * @param array $args
-     * @return void
+     * @return Response
      */
     public function get(Request $request, Response $response, array $args) {
         // Data to return 
@@ -56,6 +56,14 @@ class SubscriberController {
         return $response->withJson( $data );
     }
 
+    /**
+     * Filter all subscriber with theire statues.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function filters(Request $request, Response $response, array $args) {
         $data = array();
 
@@ -69,6 +77,29 @@ class SubscriberController {
             // If no filter send all subscribers
             $data = $this->_subscriberMapper->getAllSubscribers();
         }
+
+        return $response->withJson( $data );
+    }
+
+    /**
+     * Create a subscriber
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function add(Request $request, Response $response) {
+        $data = array();
+        $postData = $request->getParsedBody();
+
+        // filter_var($data['email'], FILTER_SANITIZE_STRING);
+        // filter_var($data['name'], FILTER_SANITIZE_STRING);
+        // filter_var($data['state'], FILTER_SANITIZE_STRING);
+        
+
+        // @TODO : ADD verification on state
+        $data = $postData;
 
         return $response->withJson( $data );
     }

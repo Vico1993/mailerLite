@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Create a new Subscriber
+ */
+$app->post( '/subscriber/add', Controller\SubscriberController::class. ':add' );
+
+/**
  * Routes to get one or all Subscriber.
  */
 $app->get( '/subscriber/get[/{id}]', Controller\SubscriberController::class. ':get' );
