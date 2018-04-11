@@ -12,9 +12,16 @@ class SubscriberController {
     /**
      * Container who will get all data from our Slim App ( example the bdd )
      *
-     * @var [type]
+     * @var \Slim\Container
      */
-    protected $container;
+    protected $_container;
+
+    /**
+     * SubscriberMapper permet to interact with the BDD to get all our subscriber
+     *
+     * @var SubscriberMapper
+     */
+    protected $_subscriberMapper;
 
     /**
      * Controller who will responds to a specifc routes
@@ -22,7 +29,8 @@ class SubscriberController {
      * @param \Slim\Container $container
      */
     public function __construct( \Slim\Container $container ) {
-        $this->container = $container;
+        $this->_container = $container;
+        $this->_subscriberMapper = new SubscriberMapper( $container->db );
     }
 
     /**
@@ -36,18 +44,33 @@ class SubscriberController {
     public function get(Request $request, Response $response, array $args) {
         // Data to return 
         $data = array();
-        $subscriberMapper = new SubscriberMapper($this->container->db); 
-
-        // Get an id in url.
+        
+        // Check if we have an id in the URL
         if ( isset( $args['id'] ) && !empty( $args['id'] ) ) {
-            $id = $args['id'];
-            $data = $subscriberMapper->getSubscriberById( $id );
+            $data = $this->_subscriberMapper->getSubscriberById( $args['id'] );
         }
         else {
-            $data = $subscriberMapper->getAllSubscribers();
+            $data = $this->_subscriberMapper->getAllSubscribers();
         }
         
-        return $response->withJson($data);
+        return $response->withJson( $data );
+    }
+
+    public function filters(Request $request, Response $response, array $args) {
+        $data = array();
+
+        // Check if we have an id in the URL
+        if ( isset( $args['id_state'] ) && !empty( $args['id_state'] ) ) {
+            if ( $this->_subscriberMapper->checkStateById( $args['id_state'] ) ) {
+                $data = $this->_subscriberMapper->getSubscriberByState( $args['id_state'] );
+            }
+        }
+        else {
+            // If no filter send all subscribers
+            $data = $this->_subscriberMapper->getAllSubscribers();
+        }
+
+        return $response->withJson( $data );
     }
 }
 ?>

@@ -118,9 +118,9 @@ class SubscriberMapper {
     function getSubscriberByState( int $id_state ) {
         $subscribers = [];
         
-        $query = $this->_pdo->prepare( 'SELECT * FROM subscriber as sub 
+        $query = $this->_pdo->prepare( 'SELECT sub.id, sub.name, sub.email, stat.value AS state_value FROM subscriber as sub 
                                         LEFT JOIN subscriber_state as stat ON sub.id_state = stat.id WHERE sub.id_state = :id_state' );
-		$query->bindValue( ':id', $id_state );
+		$query->bindValue( ':id_state', $id_state );
 		$query->execute();
 
 		while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {
@@ -155,6 +155,30 @@ class SubscriberMapper {
 		}
 
 		return NULL;
+    }
+
+    /**
+     * Check if we get a good id_state
+     *
+     * @param integer $id_state
+     * @return boolean
+     */
+    function checkStateById( int $id_state ) {
+        $return = true;
+
+        $query = $this->_pdo->prepare( 'SELECT * FROM subscriber_state WHERE id = :id' );
+        $query->bindValue( ':id', $id_state );
+        $query->execute(); 
+        
+        $res = $query->fetch( PDO::FETCH_OBJ );
+
+        // If we get no responds, it's not a good id.
+        if ( empty( $res ) ) {
+            $return = false;
+        }
+
+        return $return;
+
     }
 }
 

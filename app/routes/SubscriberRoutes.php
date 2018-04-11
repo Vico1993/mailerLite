@@ -3,6 +3,11 @@
 /**
  * Routes to get one or all Subscriber.
  */
-$app->get( '/subscribers[/{id}]', Controller\SubscriberController::class. ':get' );
+$app->get( '/subscriber/get[/{id}]', Controller\SubscriberController::class. ':get' );
+
+/**
+ * Routes to get all Subscriber with a specific state
+ */
+$app->get( '/subscriber/filter[/{id_state}]', Controller\SubscriberController::class. ':filters');
 
 ?>
