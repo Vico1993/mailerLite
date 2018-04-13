@@ -20,4 +20,10 @@ $app->get( '/subscriber/get[/{id}]', Controller\SubscriberController::class. ':g
  */
 $app->get( '/subscriber/filter[/{id_state}]', Controller\SubscriberController::class. ':filters');
 
+/**
+ * Routes to delete a Subscriber
+ */
+$app->delete( '/subscriber/delete/{id}', Controller\SubscriberController::class. ':delete');
+
+
 ?>
