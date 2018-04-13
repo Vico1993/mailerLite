@@ -99,7 +99,7 @@ class SubscriberController {
                 // at the begining the subscriber is unconfirmed
                 $id_state = 5;
                 $this->_subscriberMapper->saveSubscriber( filter_var($postData['name'], FILTER_SANITIZE_STRING), filter_var($postData['email'], FILTER_SANITIZE_STRING), $id_state );
-                $data['success'] = "user created";
+                $data['success'] = "subscriber created";
             } else {
                 $response = $response->withStatus( 400 );
                 $data[ 'error' ] = "Name not found. Please send us a valid Name";
@@ -135,10 +135,30 @@ class SubscriberController {
                 $subscriber['id_state'] = ( !empty( $postData['id_state'] ) && $this->_subscriberMapper->checkStateById( filter_var( $postData['id_state'], FILTER_VALIDATE_INT ) ) ) ? filter_var( $postData['id_state'], FILTER_VALIDATE_INT ) : $this->_subscriberMapper->getSubscriberStateByValue( $subscriber['state'] );
 
                 $this->_subscriberMapper->saveSubscriber( $subscriber['name'], $subscriber['email'], $subscriber['id_state'], $subscriber['id'] );
-                $data['success'] = "user updated";
+                $data['success'] = "subscriber updated";
             } else {
                 $response = $response->withStatus( 400 );
                 $data[ 'error' ] = "Can't find this subscriber.. Please check your id.";
+            }
+        } else {
+            $response = $response->withStatus( 400 );
+            $data[ 'error' ] = "id not found or incorrect. Please send us a valid id.";
+        }
+
+        return $response->withJson( $data );
+    }
+
+    public function delete(Request $request, Response $response, $args) {
+        $data = array();
+
+        if ( !empty( $args['id'] ) && intval( $args['id'] ) ) {
+            $subscriber = $this->_subscriberMapper->getSubscriberById( $args['id'] );
+            if( !empty( $subscriber ) ) { 
+                $this->_subscriberMapper->deleteSubscriber( $subscriber['id'] );
+                $data['success'] = "subscriber deleted";
+            } else {
+                $response = $response->withStatus( 400 );
+                $data[ 'error' ] = "Can't find this subscriber.. Please check your id."; 
             }
         } else {
             $response = $response->withStatus( 400 );

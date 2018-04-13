@@ -152,6 +152,18 @@ class SubscriberMapper {
     }
 
     /**
+     * Delete a Subscriber
+     *
+     * @param integer $id
+     * @return void
+     */
+    function deleteSubscriber( int $id ) {
+        $query = $this->_pdo->prepare("DELETE FROM subscriber WHERE id = :id");
+        $query->bindValue( ':id', $id );
+		$query->execute();
+    }
+
+    /**
      * Check if we get a good id_state
      *
      * @param integer $id_state
