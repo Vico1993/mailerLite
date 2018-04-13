@@ -172,8 +172,8 @@ class SubscriberMapper {
     public function checkStateById( int $id_state ) {
         $return = true;
 
-        $query = $this->_pdo->prepare( 'SELECT * FROM subscriber_state WHERE id = :id' );
-        $query->bindValue( ':id', $id_state );
+        $query = $this->_pdo->prepare( 'SELECT * FROM subscriber_state WHERE id = :id_state' );
+        $query->bindValue( ':id_state', $id_state );
         $query->execute(); 
         
         $res = $query->fetch( PDO::FETCH_OBJ );

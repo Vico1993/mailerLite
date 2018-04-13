@@ -178,4 +178,27 @@ class FieldMapper {
         $query->bindValue( ':id', $id );
 		$query->execute();
     }
+
+    /**
+     * Check if it's a good id for a type.
+     *
+     * @param integer $id_type
+     * @return boolean
+     */
+    public function checkTypeById( int $id_type ) {
+        $return = true;
+
+        $query = $this->_pdo->prepare( 'SELECT * FROM field_type WHERE id = :id_type' );
+        $query->bindValue( ':id_type', $id_type );
+        $query->execute(); 
+        
+        $res = $query->fetch( PDO::FETCH_OBJ );
+
+        // If we get no responds, it's not a good id.
+        if ( empty( $res ) ) {
+            $return = false;
+        }
+
+        return $return;
+    }
 }

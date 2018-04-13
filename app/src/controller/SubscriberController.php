@@ -42,7 +42,6 @@ class SubscriberController {
      * @return Response
      */
     public function get(Request $request, Response $response, array $args) {
-        // Data to return 
         $data = array();
         
         // Check if we have an id in the URL
@@ -120,7 +119,7 @@ class SubscriberController {
      * @param array $args
      * @return Response
      */
-    public function update(Request $request, Response $response, $args) {
+    public function update(Request $request, Response $response, array $args) {
         $data = array();
         $postData = $request->getParsedBody();
 
@@ -128,7 +127,7 @@ class SubscriberController {
         // If it's an integer
         // And if a subscriber got this ID
         if ( !empty( $args['id'] ) && intval( $args['id'] ) ) { 
-            $subscriber = $this->_subscriberMapper->getSubscriberById( $args['id'] );
+            $subscriber = $this->_subscriberMapper->getSubscriberById( filter_var( $args['id'], FILTER_VALIDATE_INT ) );
             if( !empty( $subscriber ) ) {
                 $subscriber['name'] = ( !empty( $postData['name'] ) ) ? filter_var( $postData['name'], FILTER_SANITIZE_STRING ) : $subscriber['name'];
                 $subscriber['email'] = ( !empty( $postData['email'] ) && $this->checkEmail( $postData['email'] ) ) ? $postData['email'] : $subscriber['email'];
@@ -148,6 +147,14 @@ class SubscriberController {
         return $response->withJson( $data );
     }
 
+    /**
+     * Delete a subscriber
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return void
+     */
     public function delete(Request $request, Response $response, $args) {
         $data = array();
 
