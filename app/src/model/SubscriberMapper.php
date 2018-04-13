@@ -31,16 +31,16 @@ class SubscriberMapper {
      * @param string $name
      * @param string $email
      * @param integer $id_state
-     * @param integer $id
+     * @param integer [opt] $id
      * @return void
      */
-    function saveSubscriber( string $name, string $email, int $id_state, int $id = 0 ) {
+    public function saveSubscriber( string $name, string $email, int $id_state, int $id = 0 ) {
         
         // If no ID given let's create this subscriber.
         if ( $id == 0 ) {
             $query = $this->_pdo->prepare( 'INSERT INTO subscriber (name, email, id_state) VALUES (:name, :email, :id_state)' );
         } else {
-            $query = $this->_pdo->prepare( 'UPDATE subscriber SET id=:id, name=:name, email=:email, id_state=:id_state WHERE id = :id' );
+            $query = $this->_pdo->prepare( 'UPDATE subscriber SET name=:name, email=:email, id_state=:id_state WHERE id = :id' );
             $query->bindValue( ':id', $id );
         }
 
@@ -55,7 +55,7 @@ class SubscriberMapper {
      *
      * @return array 
      */
-    function getAllSubscribers() {
+    public function getAllSubscribers() {
         $subscribers = [];
         
         $query = $this->_pdo->prepare( 'SELECT * FROM subs ORDER BY subs.state_value' );
@@ -80,9 +80,9 @@ class SubscriberMapper {
      * Return a Subscriber with this id
      *
      * @param integer $id
-     * @return NULL|Subscriber
+     * @return NULL|array
      */
-    function getSubscriberById( int $id ) {
+    public function getSubscriberById( int $id ) {
         $query = $this->_pdo->prepare( 'SELECT * FROM subs WHERE id = :id' );
 		$query->bindValue( ':id', $id );
 		$query->execute();
@@ -109,7 +109,7 @@ class SubscriberMapper {
      * @param integer $id_state
      * @return void
      */
-    function getSubscriberByState( int $id_state ) {
+    public function getSubscriberByState( int $id_state ) {
         $subscribers = [];
         
         $query = $this->_pdo->prepare( 'SELECT sub.id, sub.name, sub.email, stat.value AS state_value FROM subscriber as sub 
@@ -138,7 +138,7 @@ class SubscriberMapper {
      * @param string $state
      * @return integer
      */
-    function getSubscriberStateByValue( string $state ) {
+    public function getSubscriberStateByValue( string $state ) {
         $query = $this->_pdo->prepare( 'SELECT * FROM subscriber_state WHERE value = :state' );
 		$query->bindValue( ':state', $state );
 		$query->execute();
@@ -157,7 +157,7 @@ class SubscriberMapper {
      * @param integer $id
      * @return void
      */
-    function deleteSubscriber( int $id ) {
+    public function deleteSubscriber( int $id ) {
         $query = $this->_pdo->prepare("DELETE FROM subscriber WHERE id = :id");
         $query->bindValue( ':id', $id );
 		$query->execute();
@@ -169,7 +169,7 @@ class SubscriberMapper {
      * @param integer $id_state
      * @return boolean
      */
-    function checkStateById( int $id_state ) {
+    public function checkStateById( int $id_state ) {
         $return = true;
 
         $query = $this->_pdo->prepare( 'SELECT * FROM subscriber_state WHERE id = :id' );

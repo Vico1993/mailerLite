@@ -22,6 +22,7 @@ $app = new \Slim\App(['settings' => $config]);
 
 $container = $app->getContainer();
 
+// Connection to the Database
 $container['db'] = function ($c) {
     $db = $c['settings']['db'];
     $pdo = new PDO('mysql:host=' . $db['host'] . ';port=' . $db['port'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
@@ -34,6 +35,7 @@ $container['db'] = function ($c) {
  * Adding Routes to our application
  */
 require __DIR__ . '/routes/SubscriberRoutes.php';
+require __DIR__ . '/routes/FieldRoutes.php';
 
 $app->get('/', function (Request $request, Response $response, array $args) {
     echo "Racine début";
@@ -43,13 +45,6 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     // echo "<pre>";
     // var_dump($subscriberMapper->getSubscriberById(1));
     // echo "</pre>";
-});
-
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-    $name = $args['name'];
-    $response->getBody()->write("Hello, $name");
-
-    return $response;
 });
 
 $app->run();
