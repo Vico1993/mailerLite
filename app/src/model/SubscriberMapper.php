@@ -24,35 +24,29 @@ class SubscriberMapper {
     function __construct( PDO $pdo ) {
         $this->_pdo = $pdo;
     }  
-
-    /**
-     * Insert a new Subscriber
-     *
-     * @param Subscriber $sub
-     * @return integer
-     */
-    function addSubscriber( Subscriber $sub ) {
-        $query = $this->_pdo->prepare( 'INSERT INTO subscriber (id_state , name, email) VALUES (:id_state, :name, :email)' );
-		$query->bindValue( ':id_state', $user->getSubscriberStateByValue( $sub->getState() ) );
-		$query->bindValue( ':name', $sub->getName( ) );
-		$query->bindValue( ':email', $sub->getEmail( ) );
-        $query->execute();
-        
-		return $this->_pdo->lastInsertId();
-    }
     
     /**
-     * Save/Update a Subscriber
+     * Save / update a subscriber
      *
-     * @param Subscriber $sub
+     * @param string $name
+     * @param string $email
+     * @param integer $id_state
+     * @param integer $id
      * @return void
      */
-    function saveSubscriber( Subscriber $sub ) {
-        $query = $this->_pdo->prepare( 'UPDATE MyGuests SET id=:id, name=:name, email=:email WHERE id = :id' );
-		$query->bindValue( ':id', $sub->getId() );
-		$query->bindValue( ':state', $sub->getState() );
-		$query->bindValue( ':name', $sub->getName( ) );
-		$query->bindValue( ':email', $sub->getEmail( ) );
+    function saveSubscriber( string $name, string $email, int $id_state, int $id = 0 ) {
+        
+        // If no ID given let's create this subscriber.
+        if ( $id == 0 ) {
+            $query = $this->_pdo->prepare( 'INSERT INTO subscriber (name, email, id_state) VALUES (:name, :email, :id_state)' );
+        } else {
+            $query = $this->_pdo->prepare( 'UPDATE subscriber SET id=:id, name=:name, email=:email, id_state=:id_state WHERE id = :id' );
+            $query->bindValue( ':id', $id );
+        }
+
+		$query->bindValue( ':name', $name );
+        $query->bindValue( ':email', $email );
+		$query->bindValue( ':id_state', $id_state );
         $query->execute();
     }
 
@@ -139,7 +133,7 @@ class SubscriberMapper {
     }
 
     /**
-     * Return the idea of a state
+     * Return the id of a state
      *
      * @param string $state
      * @return integer

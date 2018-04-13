@@ -6,6 +6,11 @@
 $app->post( '/subscriber/add', Controller\SubscriberController::class. ':add' );
 
 /**
+ * Update a new Subscriber
+ */
+$app->put( '/subscriber/update/{id}', Controller\SubscriberController::class. ':update' );
+
+/**
  * Routes to get one or all Subscriber.
  */
 $app->get( '/subscriber/get[/{id}]', Controller\SubscriberController::class. ':get' );

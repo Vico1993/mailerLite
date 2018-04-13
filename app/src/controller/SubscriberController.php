@@ -86,22 +86,86 @@ class SubscriberController {
      *
      * @param Request $request
      * @param Response $response
-     * @param array $args
      * @return Response
      */
     public function add(Request $request, Response $response) {
         $data = array();
         $postData = $request->getParsedBody();
 
-        // filter_var($data['email'], FILTER_SANITIZE_STRING);
-        // filter_var($data['name'], FILTER_SANITIZE_STRING);
-        // filter_var($data['state'], FILTER_SANITIZE_STRING);
+        // Clean data receive in POST
+        // checkdnsrr will check if domain of email is reacheable
+        if ( !empty( $postData['email'] ) && $this->checkEmail( $postData['email'] ) ) {
+            if ( !empty( $postData['name'] ) ) {
+                // at the begining the subscriber is unconfirmed
+                $id_state = 5;
+                $this->_subscriberMapper->saveSubscriber( filter_var($postData['name'], FILTER_SANITIZE_STRING), filter_var($postData['email'], FILTER_SANITIZE_STRING), $id_state );
+                $data['success'] = "user created";
+            } else {
+                $response = $response->withStatus( 400 );
+                $data[ 'error' ] = "Name not found. Please send us a valid Name";
+            }
+        } else {
+            $response = $response->withStatus( 400 );
+            $data[ 'error' ] = "Email not found or incorrect. Please send us a valid Email.";
+        }
         
+        return $response->withJson( $data );
+    }
 
-        // @TODO : ADD verification on state
-        $data = $postData;
+    /**
+     * Update a subscriber.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function update(Request $request, Response $response, $args) {
+        $data = array();
+        $postData = $request->getParsedBody();
+
+        // Test if we receive an ID
+        // If it's an integer
+        // And if a subscriber got this ID
+        if ( !empty( $args['id'] ) && intval( $args['id'] ) ) { 
+            $subscriber = $this->_subscriberMapper->getSubscriberById( $args['id'] );
+            if( !empty( $subscriber ) ) {
+                $subscriber['name'] = ( !empty( $postData['name'] ) ) ? filter_var( $postData['name'], FILTER_SANITIZE_STRING ) : $subscriber['name'];
+                $subscriber['email'] = ( !empty( $postData['email'] ) && $this->checkEmail( $postData['email'] ) ) ? $postData['email'] : $subscriber['email'];
+                $subscriber['id_state'] = ( !empty( $postData['id_state'] ) && $this->_subscriberMapper->checkStateById( filter_var( $postData['id_state'], FILTER_VALIDATE_INT ) ) ) ? filter_var( $postData['id_state'], FILTER_VALIDATE_INT ) : $this->_subscriberMapper->getSubscriberStateByValue( $subscriber['state'] );
+
+                $this->_subscriberMapper->saveSubscriber( $subscriber['name'], $subscriber['email'], $subscriber['id_state'], $subscriber['id'] );
+                $data['success'] = "user updated";
+            } else {
+                $response = $response->withStatus( 400 );
+                $data[ 'error' ] = "Can't find this subscriber.. Please check your id.";
+            }
+        } else {
+            $response = $response->withStatus( 400 );
+            $data[ 'error' ] = "id not found or incorrect. Please send us a valid id.";
+        }
 
         return $response->withJson( $data );
+    }
+
+    /**
+     * Method to check email, if ok return the email
+     *
+     * @param string $email
+     * @return boolean|string
+     */
+    private function checkEmail( string $email ) {
+        $ret = false;
+        // Verif email format
+        if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+            // Verif domain of email
+            list( $username, $mailDomain) = explode( "@", $email );
+            if ( checkdnsrr( $mailDomain, "MX" ) ) {
+                $ret = $email;
+            }
+        }
+
+        return $ret;
     }
 }
 ?>
