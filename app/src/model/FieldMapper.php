@@ -133,7 +133,6 @@ class FieldMapper {
      * @param integer $id_type
      * @param integer $id_subscriber
      * @return NULL|array
-     * @todo : Better way to do this IF... 
      */
     public function getFieldFiltered( int $id_type, int $id_subscriber = 0 ) {
         $fields = array();
