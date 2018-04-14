@@ -31,6 +31,9 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 
+// Set dir of our template
+$container['view'] = new \Slim\Views\PhpRenderer('./src/template/');
+
 /**
  * Adding Routes to our application
  */
@@ -38,13 +41,8 @@ require __DIR__ . '/routes/SubscriberRoutes.php';
 require __DIR__ . '/routes/FieldRoutes.php';
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    echo "Racine début";
-    
-    // $subscriberMapper = new Model\SubscriberMapper($this->db); 
-
-    // echo "<pre>";
-    // var_dump($subscriberMapper->getSubscriberById(1));
-    // echo "</pre>";
+    $response = $this->view->render($response, 'index.phtml');
+    return $response;
 });
 
 $app->run();

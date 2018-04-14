@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Documentation</title>
+    <link type="text/css" rel="stylesheet" href="src/template/css/materialize.min.css"  media="screen,projection"/>  
+</head>
+<body>
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <h1 class="header center orange-text"> Hi there :) </h1>  
+
+            <div class="row-center center">
+                <h5>
+                    Hello, and welcome. 
+                    <p>Here, i will show you every routes I setups.</p>
+                </h5>
+                <div class="row center">
+                    <a data-scroll="" href="#routes" class="btn-large waves-effect waves-light teal lighten-1 orange"> Let's Go ! </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section id="routes">
+        <div class="container">
+            <p class="center">
+                We have in this example two kind of roads.
+            </p>
+            <div id="subscriber">
+                <p class="center">
+                    First, Subscribers
+                </p>
+                <div class="list">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <p>
+                            <strong class="title">POST </strong>/subscriber/add
+                        </p>
+                        <div> 
+                            <ul>
+                                <li>
+                                    <p>
+                                        ( Required ) <strong>Email</strong> : Email of our subscriber
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        ( Required ) <strong>Name</strong> : Name of our subscriber
+                                    </p>
+                                </li>
+                            </ul>
+                        </p>
+                        <a href="/subscriber/add" class="secondary-content">
+                            Try it !
+                        </a>
+                    </li>
+                    <li class="collection-item avatar">
+                        <p>
+                            <strong class="title">PUT </strong>/subscriber/update/{id}
+                        </p>
+                        <div> 
+                            <ul>
+                                <li>
+                                    <p>
+                                        ( Required ) <strong>Id</strong> : Id of our subscriber
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Email</strong> : Email of our subscriber
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Name</strong> : Name of our subscriber
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>id_state</strong> : Id of our subscriber's state
+                                    </p>
+                                </li>
+                            </ul>
+                        </p>
+                        <a href="/subscriber/update/" class="secondary-content">
+                            Try it !
+                        </a>
+                    </li>
+                    <li class="collection-item avatar">
+                        <p>
+                            <strong class="title">GET </strong>/subscriber/get[/{id}]
+                        </p>
+                        <div> 
+                            <ul>
+                                <li>
+                                    <p>
+                                        <strong>Id</strong> : Id of our subscriber, if no id send get all subscriber
+                                    </p>
+                                </li>
+                            </ul>
+                        </p>
+                        <a href="/subscriber/get" class="secondary-content">
+                            Try it !
+                        </a>
+                    </li>
+                    <li class="collection-item avatar">
+                        <p>
+                            <strong class="title">GET </strong>/subscriber/filter[/{id_state}]
+                        </p>
+                        <div> 
+                            <ul>
+                                <li>
+                                    <p>
+                                        <strong>id_state</strong> : Id of the state you want to get, if no id send, get all subscriber.
+                                    </p>
+                                </li>
+                            </ul>
+                        </p>
+                        <a href="/subscriber/filter" class="secondary-content">
+                            Try it !
+                        </a>
+                    </li>
+                    <li class="collection-item avatar">
+                        <p>
+                            <strong class="title">DELETE </strong>/subscriber/delete/{id}
+                        </p>
+                        <div> 
+                            <ul>
+                                <li>
+                                    <p>
+                                        <strong>id</strong> : Id of our subscriber
+                                    </p>
+                                </li>
+                            </ul>
+                        </p>
+                        <a href="/subscriber/delete" class="secondary-content">
+                            Try it !
+                        </a>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="routes">
+        <div class="container">
+            <div id="subscriber">
+                <p class="center">
+                    Second, Fields
+                </p>
+                <div class="list">
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <p>
+                                <strong class="title">POST </strong>/field/add
+                            </p>
+                            <div> 
+                                <ul>
+                                    <li>
+                                        <p>
+                                            ( Required ) <strong>title</strong> : Title of our field
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            ( Required ) <strong>id_type</strong> : Id of our field type
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            ( Required ) <strong>id_subscriber</strong> : Id of our subscriber who own this field
+                                        </p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="/field/add" class="secondary-content">
+                                Try it !
+                            </a>
+                        </li>
+                        <li class="collection-item avatar">
+                            <p>
+                                <strong class="title">PUT </strong>/field/update/{id}
+                            </p>
+                            <div> 
+                                <ul>
+                                    <li>
+                                        <p>
+                                            ( Required ) <strong>Id</strong> : Id of our field
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <strong>title</strong> : Title of our field
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <strong>id_type</strong> : if of our field type
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <strong>id_subscriber</strong> : Id of our subscriber who own this field
+                                        </p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="/field/update/" class="secondary-content">
+                                Try it !
+                            </a>
+                        </li>
+                        <li class="collection-item avatar">
+                            <p>
+                                <strong class="title">GET </strong>/field/get[/{id}]
+                            </p>
+                            <div> 
+                                <ul>
+                                    <li>
+                                        <p>
+                                            <strong>Id</strong> : Id of our field, if no id send get all field
+                                        </p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="/field/get" class="secondary-content">
+                                Try it !
+                            </a>
+                        </li>
+                        <li class="collection-item avatar">
+                            <p>
+                                <strong class="title">GET </strong>/field/filter[/{id_type}/subscriber/{id_subscriber}]
+                            </p>
+                            <div> 
+                                <ul>
+                                    <li>
+                                        <p>
+                                            <strong>id_type</strong> : Id of the type you want to get, if no id send, get all field.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <strong>id_subscriber</strong> : Id of the subscriber you want
+                                        </p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="/field/filter" class="secondary-content">
+                                Try it !
+                            </a>
+                        </li>
+                        <li class="collection-item avatar">
+                            <p>
+                                <strong class="title">GET </strong>/field/subscriber/{id_subscriber}
+                            </p>
+                            <div> 
+                                <ul>
+                                    <li>
+                                        <p>
+                                            <strong>id_subscriber</strong> : Id of the subscriber you want
+                                        </p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="/field/subscriber" class="secondary-content">
+                                Try it !
+                            </a>
+                        </li>
+                        <li class="collection-item avatar">
+                            <p>
+                                <strong class="title">DELETE </strong>/field/delete/{id_field}
+                            </p>
+                            <div> 
+                                <ul>
+                                    <li>
+                                        <p>
+                                            <strong>id_field</strong> : Id of the field you want to delete
+                                        </p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="/field/delete" class="secondary-content">
+                                Try it !
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="src/template/js/materialize.min.js"></script>
+</body>
+</html>
