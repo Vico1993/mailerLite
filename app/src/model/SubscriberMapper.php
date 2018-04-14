@@ -62,7 +62,6 @@ class SubscriberMapper {
 		$query->execute();
 
 		while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {
-            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
             $subscriber = [
                 'id'        => $res->id, 
                 'name'      => $res->name, 
@@ -89,7 +88,6 @@ class SubscriberMapper {
 		$res = $query->fetch( PDO::FETCH_OBJ );
 
 		if( !empty( $res ) ) {
-            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
             $subscriber = [
                 'id'        => $res->id, 
                 'name'      => $res->name, 
@@ -118,7 +116,6 @@ class SubscriberMapper {
 		$query->execute();
 
 		while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {
-            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
             $subscriber = [
                 'id'        => $res->id, 
                 'name'      => $res->name, 

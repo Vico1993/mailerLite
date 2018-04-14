@@ -56,7 +56,6 @@ class FieldMapper {
         $query->execute();
         
         while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {
-            // $subscriber = new Subscriber( $res->id, $res->name, $res->email, $res->state_value );
             $field = [
                 'id'            => $res->id, 
                 'title'         => $res->title, 
