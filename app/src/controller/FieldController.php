@@ -31,7 +31,7 @@ class FieldController {
      */
     protected $_fieldMapper;
 
-    public function __construct( \Slim\Container $_container ) {
+    public function __construct( \Slim\Container $container ) {
         $this->_container = $container;
         $this->_subscriberMapper = new SubscriberMapper( $container->db );
         $this->_fieldMapper = new FieldMapper( $container->db );
@@ -60,20 +60,20 @@ class FieldController {
     }
 
     /**
-     * Method to return all field with a specific type and a specific user
+     * Method to return all field with a specific type [and specifc user]
      *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @return Response
      */
-    public function filters(Request $request, Response $response, array $args) {
+    public function filter(Request $request, Response $response, array $args) {
         $data = array();
 
         // Check if we have an id in the URL
         if ( isset( $args['id_type'] ) && !empty( $args['id_type'] ) ) {
             $id_subscriber = ( isset( $args['id_subscriber'] ) && !empty( $args['id_subscriber'] ) ) ? filter_var( $args['id_subscriber'], FILTER_VALIDATE_INT ) : 0;
-            $data = $this->_fieldMapper->getFieldByTypeId( filter_var( $args['id_type'], FILTER_VALIDATE_INT ) , $id_subscriber);
+            $data = $this->_fieldMapper->getFieldFiltered( filter_var( $args['id_type'], FILTER_VALIDATE_INT ) , $id_subscriber);
         }
         else {
             // If no filter send all subscribers
@@ -91,7 +91,7 @@ class FieldController {
      * @param array $args
      * @return Response
      */
-    public function subscribers(Request $request, Response $response, array $args) {
+    public function subscriber(Request $request, Response $response, array $args) {
         $data = array();
 
         // Check if we have an id in the URL
@@ -119,7 +119,7 @@ class FieldController {
 
         if ( !empty( $postData['title'] ) ) {
             if ( !empty( $postData['id_type'] ) && $this->_fieldMapper->checkTypeById( filter_var( $postData['id_type'], FILTER_VALIDATE_INT) ) ) {
-                $subscriber = $this->_subscriberMapper->getSubscriberById( filter_var( $args['id_subscriber'], FILTER_VALIDATE_INT ) );
+                $subscriber = $this->_subscriberMapper->getSubscriberById( filter_var( $postData['id_subscriber'], FILTER_VALIDATE_INT ) );
                 if( !empty( $subscriber ) ) {
                     $this->_fieldMapper->saveField( $subscriber['id'], filter_var( $postData['title'], FILTER_SANITIZE_STRING), filter_var( $postData['id_type'], FILTER_VALIDATE_INT));
                     $data['success'] = "field created";
@@ -151,13 +151,13 @@ class FieldController {
         $postData = $request->getParsedBody();
 
         if ( !empty( $args['id'] ) && intval( $args['id'] ) ) { 
-            $field = $this->_fieldMapper->getFieldById( filter_var( $postData['id'], FILTER_VALIDATE_INT) );
+            $field = $this->_fieldMapper->getFieldById( filter_var( $args['id'], FILTER_VALIDATE_INT) );
             if ( !empty( $field ) ) {
                 $field['title'] = ( !empty( $postData['title'] ) ) ? filter_var( $postData['title'], FILTER_SANITIZE_STRING ) : $field['title'];
                 $field['id_type'] = ( !empty( $postData['id_type'] ) ) ? filter_var( $postData['id_type'], FILTER_SANITIZE_STRING ) : $field['id_type'];
                 $field['id_subscriber'] = ( !empty( $postData['id_subscriber'] ) ) ? filter_var( $postData['id_subscriber'], FILTER_SANITIZE_STRING ) : $field['id_subscriber'];
                 
-                $this->_fieldMapper->saveField( $field['id_subscriber'], $field['title'], $field['id_type'] );
+                $this->_fieldMapper->saveField( $field['id_subscriber'], $field['title'], $field['id_type'], $args['id'] );
                 $data['success'] = "field updated";
             } else {
                 $response = $response->withStatus( 400 );

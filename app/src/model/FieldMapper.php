@@ -34,7 +34,7 @@ class FieldMapper {
         if ( $id == 0 ) {
             $query = $this->_pdo->prepare( 'INSERT INTO field (id_subscriber, id_type, title) VALUES (:id_subscriber, :id_type, :title)' );
         } else {
-            $query = $this->_pdo->prepare( 'UPDATE field SET id_subscriber:id_subscriber, id_type:id_type, title:title WHERE id=:id' );
+            $query = $this->_pdo->prepare( 'UPDATE field SET id_subscriber=:id_subscriber, id_type=:id_type, title=:title WHERE id=:id' );
             $query->bindValue( ':id', $id );
         }
 
@@ -136,12 +136,14 @@ class FieldMapper {
      * @return NULL|array
      * @todo : Better way to do this IF... 
      */
-    public function getFieldByTypeId( int $id_type, int $id_subscriber = 0 ) {
+    public function getFieldFiltered( int $id_type, int $id_subscriber = 0 ) {
+        $fields = array();
+
         $query_string = 'SELECT * FROM field_data WHERE id_type = :id_type';
         if ( $id_subscriber != 0 ) {
             $query_string .= ' AND id_subscriber = :id_subscriber';
         }
-        
+
         $query = $this->_pdo->prepare( $query_string );
         $query->bindValue( ':id_type', $id_type );
         
@@ -150,9 +152,8 @@ class FieldMapper {
         }
 
         $query->execute();
-        $res = $query->fetch( PDO::FETCH_OBJ );
 
-        if( !empty( $res ) ) {
+        while( $res = $query->fetch( PDO::FETCH_OBJ ) ) {   
             $field = [
                 'id'            => $res->id, 
                 'title'         => $res->title, 
@@ -162,9 +163,10 @@ class FieldMapper {
                 'subscriber'    => $res->subscriber,
             ];
 
-			return $field;
-		}
+            $fields[] = $field;
+        }
 
+        return $fields;
     }
 
     /**

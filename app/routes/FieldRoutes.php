@@ -18,7 +18,12 @@ $app->get( '/field/get[/{id}]', Controller\FieldController::class. ':get' );
 /**
  * Routes to get all field with a specific state and specif subscriber
  */
-$app->get( '/field/filter[/{id_type}/subscriber/{id_subscriber}]', Controller\FieldController::class. ':filters');
+$app->get( '/field/filter[/{id_type}]', Controller\FieldController::class. ':filter');
+
+/**
+ * Routes to get all field with a specific state and specif subscriber
+ */
+$app->get( '/field/filter/{id_type}/subscriber/{id_subscriber}', Controller\FieldController::class. ':filter');
 
 /**
  * Routes to get all field from a subscriber
