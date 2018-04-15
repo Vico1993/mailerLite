@@ -19,7 +19,7 @@ docker-compose up
 
 ```
 
-It will donwload everything, and build everything for you. 
+It will download everything, and build everything for you. 
 
 Enjoy !! 
 
@@ -28,18 +28,15 @@ Enjoy !!
 
 - Move the app folder into your local machine, in the directory of your MAMP / WAMP / LAMP.
 
-- Import the database, with the dump into this diretory.
+- Import the database, with the dump into this directory.
 
-- You will need to configure the .env file with your MySql environement
+- You will need to configure the .env file with your MySql environment.
 
 - Like they said here : https://www.slimframework.com/docs/v3/tutorial/first-app.html ( PART Run Your Application With Apache or nginx ). 
-- You will have to config your Apache or Nginx to accepte URL Rewriting.
+- You will have to config your Apache or Nginx to accept URL Rewriting.
 
-- And if it's not woking, please send me an [email](mailto:victor.piolin@gmail.com)
+- And if it's not working, please send me an [email](mailto:victor.piolin@gmail.com)
 
 # Last Word
 
-Hope this repository can help you to find something.
-
-## TODO : 
-    - Documentation of the API ( PARTIAL : NEED TO DO CSS )
+Hope this repository can help you.
