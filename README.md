@@ -43,6 +43,3 @@ Hope this repository can help you to find something.
 
 ## TODO : 
     - Documentation of the API ( PARTIAL : NEED TO DO CSS )
-    - How to install ( Docker AND Without Docker )
-    - DATABASE .sql export data.
-    - Environement variable PHP ( Database )
