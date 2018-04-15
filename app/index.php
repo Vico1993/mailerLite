@@ -10,11 +10,11 @@ $config = [
     'displayErrorDetails'       => true,
     'addContentLengthHeader'    => false,
     'db' => [
-        'host'      => 'db', 
-        'port'      => '3306', 
-        'user'      => 'mailerlite', 
-        'pass'      => 'mailerlite', 
-        'dbname'    => 'mailerlite', 
+        'host'      => $_ENV['DB_ENV_MYSQL_HOST'],
+        'port'      => $_ENV['DB_ENV_MYSQL_PORT'], 
+        'user'      => $_ENV['DB_ENV_MYSQL_USER'], 
+        'pass'      => $_ENV['DB_ENV_MYSQL_PASSWORD'], 
+        'dbname'    => $_ENV['DB_ENV_MYSQL_DATABASE'], 
     ],
 ];
 

@@ -1,6 +1,6 @@
 This is a backend API build with [slimPHP](https://www.slimframework.com/)
 
-## How to install this Demo project
+# How to install this Demo project
 
 First you have to clone this repo like this : 
 
@@ -9,7 +9,7 @@ git clone git@github.com:Vico1993/mailerLite.git
 
 ```
 
-# With Docker ?
+## With Docker ?
 
 Go to your clone project and lanch 
 
@@ -24,7 +24,7 @@ It will donwload everything, and build everything for you.
 Enjoy !! 
 
 
-# Whithout Docker ? 
+## Whithout Docker ? 
 
 - Move the app folder into your local machine, in the directory of your MAMP / WAMP / LAMP.
 

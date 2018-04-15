@@ -7,17 +7,19 @@ web:
     - ./default.conf:/etc/nginx/conf.d/default.conf
   links:
     - php
-    - db
+    - mysql
 
 php:
   build: "./docker/php"
   dockerfile: "Dockerfile"
+  env_file:
+    - ".env"
   volumes:
     - ./app:/var/www/app
   links:
-    - db
+    - mysql
 
-db:
+mysql:
   build: "./docker/mysql"
   dockerfile: "Dockerfile"
   env_file:
